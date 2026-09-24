@@ -10,7 +10,6 @@ const ImageTabs = () => {
         <section className="border-t bg-white py-16">
             <div className="container mx-auto px-4">
                 <div className="mx-auto max-w-6xl">
-                    {/* Tabs */}
                     <div className="flex gap-2 justify-center mb-8">
                         <Button
                             onClick={() => setActiveTab("organize")}
