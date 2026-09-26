@@ -7,6 +7,7 @@ import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {signUp} from "@/lib/auth/auth-client"
 import {useState} from "react";
+import {useRouter} from "next/navigation";
 
 export default function SignUp() {
     const [name, setName] = useState("");
@@ -15,6 +16,8 @@ export default function SignUp() {
 
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+
+    const router = useRouter();
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
@@ -33,7 +36,7 @@ export default function SignUp() {
                 setError(result.error.message ?? "Failed to sign up");
             }
             else {
-
+                router.push("/dashboard");
             }
         }
         catch (error) {
@@ -57,6 +60,11 @@ export default function SignUp() {
                 </CardHeader>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <CardContent className="space-y-4">
+                        {error && (
+                            <div className="rounded-md bg-destructive/15 p-3 text-sm text-destructive">
+                                {error}
+                            </div>
+                        )}
                         <div className="space-y-2">
                             <Label htmlFor="name" className="text-gray-700">
                                 Name
@@ -104,8 +112,9 @@ export default function SignUp() {
                         <Button
                             type="submit"
                             className="w-full bg-primary hover:bg-primary/90"
+                            disabled={loading}
                         >
-                            Sign Up
+                            {loading ? "Creating account..." : "Sign Up"}
                         </Button>
                         <p className="text-center text-sm text-gray-600">
                             Already have an account?{" "}
