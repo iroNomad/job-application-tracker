@@ -28,10 +28,10 @@ const Navbar = async () => {
                             </Link>
                             <DropdownMenu>
                                 <DropdownMenuTrigger>
-                                    <Button>
+                                    <Button variant="ghost">
                                         <Avatar>
-                                            <AvatarFallback>
-                                                {session.user.name}
+                                            <AvatarFallback className="bg-primary text-white">
+                                                {session.user.name[0].toUpperCase()}
                                             </AvatarFallback>
                                         </Avatar>
                                     </Button>
