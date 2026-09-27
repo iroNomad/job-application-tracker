@@ -2,6 +2,8 @@ import {Briefcase} from "lucide-react";
 import Link from "next/link";
 import {Button} from "@/components/ui/button"
 import {getSession} from "@/lib/auth/auth";
+import {DropdownMenu, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
+import {Avatar, AvatarFallback} from "@/components/ui/avatar";
 
 const Navbar = async () => {
     const session = await getSession();
@@ -24,6 +26,17 @@ const Navbar = async () => {
                                     Dashboard
                                 </Button>
                             </Link>
+                            <DropdownMenu>
+                                <DropdownMenuTrigger>
+                                    <Button>
+                                        <Avatar>
+                                            <AvatarFallback>
+                                                {session.user.name}
+                                            </AvatarFallback>
+                                        </Avatar>
+                                    </Button>
+                                </DropdownMenuTrigger>
+                            </DropdownMenu>
                         </>
                         :
                         <>
