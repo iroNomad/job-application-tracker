@@ -46,17 +46,15 @@ const Navbar = () => {
                                         </Avatar>
                                     </Button>
                                 } />
-                                <DropdownMenuContent align="end">
+                                <DropdownMenuContent className="w-56" align="end">
                                     <DropdownMenuGroup>
-                                        <DropdownMenuItem>
-                                            {session?.user.name}
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem>
-                                            {session?.user.email}
+                                        <DropdownMenuItem className="pl-3 flex flex-col items-start space-y-1">
+                                            <p className="text-sm font-medium leading-none">{session?.user.name}</p>
+                                            <p className="text-xs leading-none text-muted-foreground">{session?.user.email}</p>
                                         </DropdownMenuItem>
                                     </DropdownMenuGroup>
                                     <DropdownMenuSeparator />
-                                    <DropdownMenuItem>
+                                    <DropdownMenuItem variant="destructive">
                                         <SignOutButton />
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>
