@@ -46,7 +46,7 @@ const Navbar = () => {
                                         </Avatar>
                                     </Button>
                                 } />
-                                <DropdownMenuContent className="w-56" align="end">
+                                <DropdownMenuContent className="w-auto" align="end">
                                     <DropdownMenuGroup>
                                         <DropdownMenuItem className="pl-3 flex flex-col items-start space-y-1">
                                             <p className="text-sm font-medium leading-none">{session?.user.name}</p>
