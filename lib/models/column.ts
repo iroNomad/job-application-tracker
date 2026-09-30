@@ -36,4 +36,4 @@ const ColumnSchema = new Schema<IColumn>({
     timestamps: true
 });
 
-export default mongoose.models.Column || mongoose.model<IColumn>("Board", ColumnSchema);
+export default mongoose.models.Column || mongoose.model<IColumn>("Column", ColumnSchema);
