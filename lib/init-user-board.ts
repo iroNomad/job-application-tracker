@@ -15,6 +15,7 @@ export async function initializeUserBoard(userId: string) {
 
         // check if the user already has a board named "Job Hunt"
         const existingBoard = await Board.findOne({ userId, name: "Job Hunt" });
+
         if (existingBoard) {
             return existingBoard;
         }
@@ -28,14 +29,14 @@ export async function initializeUserBoard(userId: string) {
 
         // create default columns for the board\
         const columns = await Promise.all(
-            DEFAULT_COLUMNS.map((column) => {
+            DEFAULT_COLUMNS.map((column) =>
                 Column.create({
                     name: column.name,
-                    boardId: board._id,
                     order: column.order,
+                    boardId: board._id,
                     jobApplications: []
-                });
-            })
+                })
+            )
         );
 
         // update the board with the created columns
