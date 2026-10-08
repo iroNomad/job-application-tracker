@@ -1,7 +1,7 @@
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
+    DialogDescription, DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger
@@ -10,6 +10,7 @@ import {Button} from "@/components/ui/button";
 import {Plus} from "lucide-react";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
+import {Textarea} from "@/components/ui/textarea";
 
 interface CreateJobAppDialogProps {
     columnId: string;
@@ -55,7 +56,34 @@ export default function CreateJobAppDialog({columnId, boardId}: CreateJobAppDial
                                 <Input id="salary" placeholder="e.g., $100k - $150k" />
                             </div>
                         </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="jobUrl">Job URL</Label>
+                            <Input id="jobUrl" placeholder="https://..." />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="tags">Tags (comma-separated)</Label>
+                            <Input id="tags" placeholder="React, JavaScript, High pay" />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="description">Description</Label>
+                            <Textarea
+                                id="description"
+                                rows={3}
+                                placeholder="Brief description of the role..."
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="notes">Notes</Label>
+                            <Textarea
+                                id="notes"
+                                rows={4}
+                            />
+                        </div>
                     </div>
+                    <DialogFooter>
+                        <Button type="button" variant="outline">Cancel</Button>
+                        <Button type="submit">Add Application</Button>
+                    </DialogFooter>
                 </form>
             </DialogContent>
         </Dialog>
