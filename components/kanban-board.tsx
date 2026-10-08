@@ -41,8 +41,8 @@ const COLUMN_CONFIG: Array<ColConfig> = [
 
 function DroppableColumn({column, config, boardId}: {column: Column, config: ColConfig, boardId: string}) {
     return (
-        <Card className="min-w-[300px] flex-shrink-0 shadow-md p-0">
-            <CardHeader className={`${config.color} text-white rounded-t-lg pb-3 pt-3`}>
+        <Card className="min-w-[300px] shrink-0 shadow-md p-0">
+            <CardHeader className={`${config.color} text-white pb-3 pt-3`}>
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                         {config.icon}
@@ -51,7 +51,7 @@ function DroppableColumn({column, config, boardId}: {column: Column, config: Col
                         </CardTitle>
                     </div>
                     <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
+                        <DropdownMenuTrigger>
                             <Button variant="ghost" size="icon" className="h-6 w-6 text-white hover:bg-white/20">
                                 <MoreVertical className="h-4 w-4" />
                             </Button>
@@ -76,7 +76,7 @@ export default function KanbanBoard({board, userId}: KanbanBoardProps) {
     return (
         <>
             <div>
-                <div>
+                <div className="flex flex-row gap-2">
                     {columns.map((column, key) => {
                         const config = COLUMN_CONFIG[key] || {
                             color: "bg-gray-500",
