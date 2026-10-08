@@ -2,9 +2,12 @@
 
 import {Board, Column} from "@/lib/models/models.types";
 import {Award, Calendar, CheckCircle2, Mic, MoreVertical, Trash2, XCircle} from "lucide-react";
-import {Card, CardHeader, CardTitle} from "@/components/ui/card";
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
 import {Button} from "@/components/ui/button";
+import {Component} from "react";
+import CreateJobDialog from "@/components/create-job-app-dialog";
+import CreateJobAppDialog from "@/components/create-job-app-dialog";
 
 interface KanbanBoardProps {
     board: Board;
@@ -41,7 +44,7 @@ const COLUMN_CONFIG: Array<ColConfig> = [
 
 function DroppableColumn({column, config, boardId}: {column: Column, config: ColConfig, boardId: string}) {
     return (
-        <Card className="min-w-[300px] shrink-0 shadow-md p-0">
+        <Card className="min-w-75 shrink-0 shadow-md p-0">
             <CardHeader className={`${config.color} text-white pb-3 pt-3`}>
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -65,6 +68,10 @@ function DroppableColumn({column, config, boardId}: {column: Column, config: Col
                     </DropdownMenu>
                 </div>
             </CardHeader>
+
+            <CardContent className="space-y-2 pt-4 bg-gray-50/50 min-h-100">
+                <CreateJobAppDialog columnId={column._id} boardId={boardId} />
+            </CardContent>
         </Card>
     );
 }
