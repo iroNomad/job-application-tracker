@@ -8,6 +8,8 @@ import {
 } from "@/components/ui/dialog";
 import {Button} from "@/components/ui/button";
 import {Plus} from "lucide-react";
+import {Label} from "@/components/ui/label";
+import {Input} from "@/components/ui/input";
 
 interface CreateJobAppDialogProps {
     columnId: string;
@@ -18,18 +20,42 @@ export default function CreateJobAppDialog({columnId, boardId}: CreateJobAppDial
     return (
         <Dialog>
             <DialogTrigger>
-                <Button variant="outline">
-                    <Plus />
+                <Button
+                    variant="outline"
+                    className="w-full mb-4 justify-start text-muted-foreground"
+                >
+                    <Plus className="mr-2 h-4 w-4" />
                     Add Job
                 </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="max-w-2xl">
                 <DialogHeader>
                     <DialogTitle>Add Job Application</DialogTitle>
                     <DialogDescription>Track a new job application</DialogDescription>
                 </DialogHeader>
-                <form action="">
-
+                <form className="space-y-4">
+                    <div className="space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="company">Company *</Label>
+                                <Input id="company" required />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="position">Position *</Label>
+                                <Input id="position" required />
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="location">Location</Label>
+                                <Input id="location" required />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="salary">Salary</Label>
+                                <Input id="salary" placeholder="e.g., $100k - $150k" />
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </DialogContent>
         </Dialog>
