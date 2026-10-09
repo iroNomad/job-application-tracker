@@ -1,3 +1,5 @@
+"use client";
+
 import {
     Dialog,
     DialogContent,
@@ -11,6 +13,7 @@ import {Plus} from "lucide-react";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import {Textarea} from "@/components/ui/textarea";
+import {useState} from "react";
 
 interface CreateJobAppDialogProps {
     columnId: string;
@@ -18,8 +21,31 @@ interface CreateJobAppDialogProps {
 }
 
 export default function CreateJobAppDialog({columnId, boardId}: CreateJobAppDialogProps) {
+    const [open, setOpen] = useState<boolean>(false);
+    const [formData, setFormData] = useState({
+        company: '',
+        position: '',
+        location: '',
+        salary: '',
+        jobUrl: '',
+        tags: '',
+        description: '',
+        notes: ''
+    });
+
+    async function handleSubmit(e: React.FormEvent) {
+        e.preventDefault();
+
+        try {
+
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger>
                 <Button
                     variant="outline"
@@ -81,7 +107,9 @@ export default function CreateJobAppDialog({columnId, boardId}: CreateJobAppDial
                         </div>
                     </div>
                     <DialogFooter>
-                        <Button type="button" variant="outline">Cancel</Button>
+                        <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+                            Cancel
+                        </Button>
                         <Button type="submit">Add Application</Button>
                     </DialogFooter>
                 </form>
