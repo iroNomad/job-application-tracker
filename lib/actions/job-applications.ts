@@ -81,4 +81,10 @@ export async function createJobApplication(data: JobApplicationData) {
         status: "applied",
         order: maxOrder ? maxOrder.order + 1 : 0,
     })
+
+    await Column.findByIdAndUpdate(columnId, {
+        $push: {jobApplications: jobApplication._id},
+    });
+
+    return {data: jobApplication};
 }
