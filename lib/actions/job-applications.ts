@@ -2,7 +2,6 @@
 
 import {getSession} from "@/lib/auth/auth";
 import connectDB from "@/lib/db";
-import column from "@/lib/models/column";
 import {Board, Column, JobApplication} from "@/lib/models";
 
 interface JobApplicationData {
@@ -56,7 +55,7 @@ export async function createJobApplication(data: JobApplicationData) {
     //Verify column belongs to board
     const column = await Column.findOne({
         _id: columnId,
-        userId: boardId,
+        boardId: boardId,
     })
 
     if (!column) {
@@ -69,6 +68,7 @@ export async function createJobApplication(data: JobApplicationData) {
         .lean()) as {order: number} | null;
 
     const jobApplication = await JobApplication.create({
+        userId: session.user.id,
         boardId,
         columnId,
         company,
@@ -86,5 +86,5 @@ export async function createJobApplication(data: JobApplicationData) {
         $push: {jobApplications: jobApplication._id},
     });
 
-    return {data: jobApplication};
+    return {data: JSON.parse(JSON.stringify(jobApplication))};
 }

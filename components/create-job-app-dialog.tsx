@@ -14,33 +14,49 @@ import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import {Textarea} from "@/components/ui/textarea";
 import {useState} from "react";
+import {createJobApplication} from "@/lib/actions/job-applications";
 
 interface CreateJobAppDialogProps {
     columnId: string;
     boardId: string;
 }
 
+const INITIAL_FORM_DATA = {
+    company: '',
+    position: '',
+    location: '',
+    salary: '',
+    jobUrl: '',
+    tags: '',
+    description: '',
+    notes: ''
+}
+
 export default function CreateJobAppDialog({columnId, boardId}: CreateJobAppDialogProps) {
     const [open, setOpen] = useState<boolean>(false);
-    const [formData, setFormData] = useState({
-        company: '',
-        position: '',
-        location: '',
-        salary: '',
-        jobUrl: '',
-        tags: '',
-        description: '',
-        notes: ''
-    });
+    const [formData, setFormData] = useState(INITIAL_FORM_DATA);
 
-    async function handleSubmit(e: React.FormEvent) {
+    async function handleSubmit(e: React.SubmitEvent) {
         e.preventDefault();
 
         try {
+            const result = await createJobApplication({
+                ...formData,
+                columnId,
+                boardId,
+                tags: formData.tags.split(',').map((tag) => tag.trim()).filter((tag) => tag.length > 0)
+            });
 
+            if (!result.error) {
+                setFormData(INITIAL_FORM_DATA);
+                setOpen(false);
+            }
+            else {
+                console.error("Failed to create job: ", result.error);
+            }
         }
         catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
 
@@ -49,7 +65,7 @@ export default function CreateJobAppDialog({columnId, boardId}: CreateJobAppDial
             <DialogTrigger>
                 <Button
                     variant="outline"
-                    className="w-full mb-4 justify-start text-muted-foreground"
+                    className="w-full mb-4 justify-start text-muted-foreground border-dashed border-2 hover:border-solid hover:text-primary"
                 >
                     <Plus className="mr-2 h-4 w-4" />
                     Add Job
