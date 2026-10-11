@@ -3,6 +3,7 @@
 import {getSession} from "@/lib/auth/auth";
 import connectDB from "@/lib/db";
 import {Board, Column, JobApplication} from "@/lib/models";
+import {revalidatePath} from "next/cache";
 
 interface JobApplicationData {
     boardId: string;
@@ -85,6 +86,8 @@ export async function createJobApplication(data: JobApplicationData) {
     await Column.findByIdAndUpdate(columnId, {
         $push: {jobApplications: jobApplication._id},
     });
+
+    revalidatePath("/dashboard");
 
     return {data: JSON.parse(JSON.stringify(jobApplication))};
 }

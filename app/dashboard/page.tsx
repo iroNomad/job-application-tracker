@@ -19,7 +19,9 @@ async function getBoard(userId: string) {
         }
     });
 
-    const board = boardDoc ? boardDoc.toObject() : null;
+    if (!boardDoc) return null;
+
+    const board = JSON.parse(JSON.stringify(boardDoc));
 
     return board;
 }
