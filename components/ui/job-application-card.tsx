@@ -3,6 +3,7 @@ import {Card, CardContent} from "@/components/ui/card";
 import {Edit2, ExternalLink, MoreVertical, Trash2} from "lucide-react";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
 import {Button} from "@/components/ui/button";
+import {updateJobApplication} from "@/lib/actions/job-applications";
 
 interface JobApplicationCardProps {
     job: JobApplication;
@@ -10,6 +11,17 @@ interface JobApplicationCardProps {
 }
 
 export default function JobApplicationCard({job, columns}: JobApplicationCardProps) {
+
+    async function handleMove(newColumnId: string) {
+        try {
+            const result = await updateJobApplication(job._id, {
+                columnId: newColumnId,
+            });
+        }
+        catch (error) {
+            console.error("Failed to move job application: ", error);
+        }
+    }
     return (
         <>
             <Card className="cursor-pointer transition-shadow hover:shadow-lg">
@@ -42,7 +54,7 @@ export default function JobApplicationCard({job, columns}: JobApplicationCardPro
                         </div>
                         <div className="flex items-start gap-1">
                             <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
+                                <DropdownMenuTrigger aschild>
                                     <Button variant="ghost" size="icon" className="w-6 h-6">
                                         <MoreVertical className="h-4 w-4" />
                                     </Button>
@@ -57,7 +69,7 @@ export default function JobApplicationCard({job, columns}: JobApplicationCardPro
                                             {columns
                                                 .filter((c) => c._id !== job.columnId)
                                                 .map((column, key) => (
-                                                <DropdownMenuItem key={key}>
+                                                <DropdownMenuItem key={key} onClick={() => handleMove(column._id)}>
                                                     Move to {column.name}
                                                 </DropdownMenuItem>
                                                 ))
