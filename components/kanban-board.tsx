@@ -8,6 +8,7 @@ import {Button} from "@/components/ui/button";
 import CreateJobAppDialog from "@/components/create-job-app-dialog";
 import JobApplicationCard from "@/components/ui/job-application-card";
 import {useBoard} from "@/lib/hooks/useBoards";
+import {closestCorners, DndContext, PointerSensor, useSensor, useSensors} from "@dnd-kit/core";
 
 
 interface KanbanBoardProps {
@@ -100,8 +101,29 @@ export default function KanbanBoard({board, userId}: KanbanBoardProps) {
 
     const sortedColumns = columns?.sort((a,b) => a.order - b.order) || [];
 
+    const sensors = useSensors(
+        useSensor(PointerSensor, {
+            activationConstraint: {
+                distance: 8,
+            }
+        })
+    );
+
+    async function handleDragStart() {
+
+    }
+
+    async function handleDragEnd() {
+
+    }
+
     return (
-        <>
+        <DndContext
+            sensors={sensors}
+            collisionDetection={closestCorners}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+        >
             <div>
                 <div className="flex flex-row gap-2">
                     {columns.map((column, key) => {
@@ -121,7 +143,7 @@ export default function KanbanBoard({board, userId}: KanbanBoardProps) {
                     })}
                 </div>
             </div>
-        </>
+        </DndContext>
     );
 
 }

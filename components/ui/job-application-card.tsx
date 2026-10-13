@@ -2,7 +2,7 @@
 
 import {Column, JobApplication} from "@/lib/models/models.types";
 import {Card, CardContent} from "@/components/ui/card";
-import {Edit2, ExternalLink, MoreVertical, Plus, Trash2} from "lucide-react";
+import {Edit2, ExternalLink, MoreVertical, Trash2} from "lucide-react";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
 import {Button} from "@/components/ui/button";
 import {deleteJobApplication, updateJobApplication} from "@/lib/actions/job-applications";
@@ -12,14 +12,12 @@ import {
     DialogDescription,
     DialogFooter,
     DialogHeader,
-    DialogTitle,
-    DialogTrigger
+    DialogTitle
 } from "@/components/ui/dialog";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import {Textarea} from "@/components/ui/textarea";
 import {useState} from "react";
-import column from "@/lib/models/column";
 
 interface JobApplicationCardProps {
     job: JobApplication;
