@@ -97,7 +97,7 @@ export default function SignIn() {
                             className="w-full bg-primary hover:bg-primary/90"
                             disabled={loading}
                         >
-                            {loading ? "Creating account..." : "Sign In"}
+                            {loading ? "Logging in..." : "Sign In"}
                         </Button>
                         <p className="text-center text-sm text-gray-600">
                             Don't have an account?{" "}
