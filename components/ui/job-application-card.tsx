@@ -116,7 +116,7 @@ export default function JobApplicationCard({job, columns, dragHandleProps}: JobA
                         </div>
                         <div className="flex items-start gap-1">
                             <DropdownMenu>
-                                <DropdownMenuTrigger aschild>
+                                <DropdownMenuTrigger>
                                     <Button variant="ghost" size="icon" className="w-6 h-6">
                                         <MoreVertical className="h-4 w-4" />
                                     </Button>
