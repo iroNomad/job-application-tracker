@@ -12,11 +12,12 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar";
-import SignOutButton from "@/components/ui/sign-out-btn";
-import {useSession} from "@/lib/auth/auth-client";
+import {signOut, useSession} from "@/lib/auth/auth-client";
+import {useRouter} from "next/navigation";
 
 const Navbar = () => {
     const {data: session} = useSession();
+    const router = useRouter();
 
     return (
         <nav className="border-b border-gray-200 bg-white">
@@ -54,8 +55,16 @@ const Navbar = () => {
                                         </DropdownMenuItem>
                                     </DropdownMenuGroup>
                                     <DropdownMenuSeparator />
-                                    <DropdownMenuItem variant="destructive">
-                                        <SignOutButton />
+                                    <DropdownMenuItem variant="destructive" className="w-full pl-3" onClick={async () => {
+                                        const result = await signOut()
+                                        if (result.data) {
+                                            router.push("/sign-in");
+                                        }
+                                        else {
+                                            alert("Error signing out");
+                                        }
+                                    }}>
+                                        Log Out
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
