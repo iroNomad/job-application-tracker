@@ -1,7 +1,7 @@
 "use client";
 
 import {Board, Column, JobApplication} from "@/lib/models/models.types";
-import {Award, Calendar, CheckCircle2, Mic, MoreVertical, Trash2, XCircle} from "lucide-react";
+import {Award, Calendar, CheckCircle2, Mic, MoreVertical, Pen, XCircle} from "lucide-react";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
 import {Button} from "@/components/ui/button";
@@ -19,8 +19,15 @@ import {
 } from "@dnd-kit/core";
 import {SortableContext, useSortable, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import {CSS} from "@dnd-kit/utilities"
-import {useState} from "react";
-
+import React, {useState} from "react";
+import {updateColumn} from "@/lib/actions/columns";
+import {
+    Dialog,
+    DialogContent,
+    DialogFooter,
+    DialogHeader,
+} from "@/components/ui/dialog";
+import {Input} from "@/components/ui/input";
 
 interface KanbanBoardProps {
     board: Board;
@@ -58,6 +65,9 @@ const COLUMN_CONFIG: Array<ColConfig> = [
 function DroppableColumn({column, config, boardId, sortedColumns}: {column: Column, config: ColConfig, boardId: string, sortedColumns: Column[]}) {
     const sortedJobs = column.jobApplications?.sort((a,b) => a.order - b.order) || [];
 
+    const [isEditing, setIsEditing] = useState(false);
+    const [newName, setNewName] = useState("");
+
     const {setNodeRef, isOver} = useDroppable({
         id: column._id,
         data: {
@@ -66,8 +76,22 @@ function DroppableColumn({column, config, boardId, sortedColumns}: {column: Colu
         }
     })
 
+    async function handleColumnEdit(columnId: string) {
+
+        try {
+            const result = await updateColumn({columnId, newName});
+
+            if (!result.error) {
+                setIsEditing(false);
+            }
+        }
+        catch (error) {
+            console.error("Failed to rename column ", error);
+        }
+    };
+
     return (
-        <Card className="min-w-75 shrink-0 shadow-md p-0">
+        <Card className="min-w-75 shrink-0 shadow-md p-0 max-w-90">
             <CardHeader className={`${config.color} text-white pb-3 pt-3`}>
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -83,14 +107,26 @@ function DroppableColumn({column, config, boardId, sortedColumns}: {column: Colu
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                            <DropdownMenuItem className="text-destructive">
-                                <Trash2 className="mr-2 h-4 w-4" />
-                                Delete Column
+                            <DropdownMenuItem onClick={() => setIsEditing(true)}>
+                                <Pen className="mr-2 h-4 w-4" />
+                                Rename
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
             </CardHeader>
+
+            <Dialog open={isEditing} onOpenChange={setIsEditing}>
+                <DialogContent>
+                    <DialogHeader>
+                        Enter new column name
+                    </DialogHeader>
+                    <Input onChange={(e) => setNewName(e.target.value)}/>
+                    <DialogFooter>
+                        <Button onClick={() => handleColumnEdit(column._id)}>Apply</Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
 
             <CardContent
                 ref={setNodeRef}
